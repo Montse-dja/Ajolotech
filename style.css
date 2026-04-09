@@ -18,14 +18,14 @@
   --text-muted:#6b7068;
   --text-dim:  #3f433f;
 
-  --teal:      #FF4D95;
-  --teal-dim:  #A1486B;
-  --amber:     #e8a838;
-  --amber-dim: #5c3f10;
-  --red:       #e85c4a;
+  --teal:      #FF63A1;
+  --teal-dim:  #9E5572;
+  --amber:     #C94BEB;
+  --amber-dim: #9C8746;
+  --red:       #F5C738;
   --red-dim:   #5c1f16;
-  --green:     #5ccc7a;
-  --green-dim: #1a4a26;
+  --green:     #FF63A1;
+  --green-dim: #9E5572;
 
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
