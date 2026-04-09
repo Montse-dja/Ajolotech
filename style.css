@@ -103,10 +103,38 @@ html, body {
   color: var(--text-dim);
 }
 
+/* ── Page body (sidebar + main) ───────────────────────────── */
+.page-body {
+  display: flex;
+  height: calc(100vh - 52px);
+}
+
+/* ── Side banner ──────────────────────────────────────────── */
+.side-banner {
+  width: 180px;
+  min-width: 180px;
+  height: 100%;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.side-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .side-banner { display: none; }
+}
+
 /* ── Dashboard layout ─────────────────────────────────────── */
 .dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
+  flex: 1;
+  overflow-y: auto;
   padding: 24px 24px 48px;
   display: flex;
   flex-direction: column;
