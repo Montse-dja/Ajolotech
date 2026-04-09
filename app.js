@@ -5,7 +5,7 @@ const App = (() => {
 
   // ── State ──────────────────────────────────────────────────
   const state = {
-    phData:      [],   // { x: timestamp (ms), y: float }
+    phData:      [],
     tempData:    [],
     count:       0,
     detections:  0,
@@ -62,7 +62,10 @@ const App = (() => {
       scales: {
         x: {
           type: "time",
-          time: { tooltipFormat: "HH:mm:ss", displayFormats: { second: "HH:mm:ss", minute: "HH:mm" } },
+          time: {
+            tooltipFormat: "HH:mm:ss",
+            displayFormats: { second: "HH:mm:ss", minute: "HH:mm" },
+          },
           ticks: { color: "#3f433f", font: { family: "IBM Plex Mono", size: 10 }, maxTicksLimit: 6 },
           grid:  { color: "#1c1f1c" },
           border:{ color: "#2a2e2a" },
@@ -75,9 +78,6 @@ const App = (() => {
       },
     },
   };
-
-  // Chart.js requires the date adapter for time scale.
-  // We use a minimal built-in approach: Chart.js 4 bundles a basic adapter.
 
   const phChart = new Chart($("chart-ph"), {
     ...chartDefaults,
@@ -133,7 +133,7 @@ const App = (() => {
 
   // ── Helpers ────────────────────────────────────────────────
   function setStatus(type, text) {
-    ui.dot.className   = "status-dot " + type;
+    ui.dot.className     = "status-dot " + type;
     ui.label.textContent = text;
   }
 
@@ -146,15 +146,12 @@ const App = (() => {
   }
 
   function addLog(msg, type = "msg") {
-    const ts   = fmtTime(Date.now());
-    const div  = document.createElement("div");
+    const ts  = fmtTime(Date.now());
+    const div = document.createElement("div");
     div.className = "log-entry " + (type === "error" ? "error" : type === "info" ? "info" : "");
     div.innerHTML = `<span class="ts">${ts}</span><span class="msg">${msg}</span>`;
     ui.log.prepend(div);
-    // Keep log from growing unbounded in the DOM
-    while (ui.log.children.length > 100) {
-      ui.log.removeChild(ui.log.lastChild);
-    }
+    while (ui.log.children.length > 100) ui.log.removeChild(ui.log.lastChild);
   }
 
   function trimData(arr) {
@@ -171,50 +168,62 @@ const App = (() => {
       return;
     }
 
-    const { ph, temp_c, axolotl_present, confidence = null, timestamp } = data;
+    const { ph, temp_c } = data;
 
-    // Validate required fields
-    if (ph === undefined || temp_c === undefined || axolotl_present === undefined) {
-      addLog("Missing required fields in payload", "error");
+    // Only ph and temp_c are required — everything else is optional for now
+    if (ph === undefined || temp_c === undefined) {
+      addLog("Missing ph or temp_c in payload", "error");
       return;
     }
 
-    const ts = timestamp ? new Date(timestamp).getTime() : Date.now();
+    // axolotl_present and confidence are optional — default to null until CV is connected
+    const axolotl_present = data.axolotl_present !== undefined ? data.axolotl_present : null;
+    const confidence      = data.confidence      !== undefined ? data.confidence      : null;
 
-    // Update rolling chart data
+    // Always use current time — Arduino does not send a timestamp
+    const ts = Date.now();
+
+    // Rolling chart data
     state.phData.push({ x: ts, y: parseFloat(ph.toFixed(2)) });
     state.tempData.push({ x: ts, y: parseFloat(temp_c.toFixed(1)) });
     trimData(state.phData);
     trimData(state.tempData);
 
-    // Update counters
+    // Counters
     state.count++;
-    if (axolotl_present) state.detections++;
+    if (axolotl_present === true) state.detections++;
 
     const phOk   = isInRange(ph, CONFIG.thresholds.ph);
     const tempOk = isInRange(temp_c, CONFIG.thresholds.temp);
     if (!phOk)   state.phAlerts++;
     if (!tempOk) state.tempAlerts++;
 
-    // ── Update UI ──────────────────────────────────────────
     // pH card
-    ui.valPh.textContent  = ph.toFixed(2);
-    ui.valPh.className    = "card-value " + (phOk ? "ok" : "alert");
+    ui.valPh.textContent    = ph.toFixed(2);
+    ui.valPh.className      = "card-value " + (phOk ? "ok" : "alert");
     ui.badgePh.textContent  = phOk ? "Normal" : "Alert";
     ui.badgePh.className    = "card-badge " + (phOk ? "ok" : "alert");
     ui.rangePh.textContent  = `Range ${CONFIG.thresholds.ph.min}–${CONFIG.thresholds.ph.max}`;
 
     // Temp card
-    ui.valTemp.textContent = temp_c.toFixed(1);
-    ui.valTemp.className   = "card-value " + (tempOk ? "ok" : "alert");
+    ui.valTemp.textContent   = temp_c.toFixed(1);
+    ui.valTemp.className     = "card-value " + (tempOk ? "ok" : "alert");
     ui.badgeTemp.textContent = tempOk ? "Normal" : "Alert";
     ui.badgeTemp.className   = "card-badge " + (tempOk ? "ok" : "alert");
     ui.rangeTemp.textContent = `Range ${CONFIG.thresholds.temp.min}–${CONFIG.thresholds.temp.max} °C`;
 
-    // Presence card
-    ui.valPresence.textContent = axolotl_present ? "DETECTED" : "NOT DETECTED";
-    ui.valPresence.className   = "card-presence " + (axolotl_present ? "detected" : "not-detected");
-    ui.valConf.textContent     = confidence !== null ? `Confidence: ${(confidence * 100).toFixed(0)}%` : "";
+    // Presence card — shows "Pending" until CV is connected
+    if (axolotl_present === null) {
+      ui.valPresence.textContent = "PENDING";
+      ui.valPresence.className   = "card-presence not-detected";
+      ui.valConf.textContent     = "CV module not yet connected";
+    } else {
+      ui.valPresence.textContent = axolotl_present ? "DETECTED" : "NOT DETECTED";
+      ui.valPresence.className   = "card-presence " + (axolotl_present ? "detected" : "not-detected");
+      ui.valConf.textContent     = confidence !== null
+        ? `Confidence: ${(confidence * 100).toFixed(0)}%`
+        : "";
+    }
 
     // Stats
     ui.statCount.textContent = state.count;
@@ -234,15 +243,12 @@ const App = (() => {
         `min ${Math.min(...tVals).toFixed(1)}  max ${Math.max(...tVals).toFixed(1)} °C`;
     }
 
-    // Last seen
     ui.lastSeen.textContent = "Last: " + fmtTime(ts);
 
-    // Charts
     phChart.update("none");
     tempChart.update("none");
 
-    // Log entry
-    const presenceTag = axolotl_present ? " [AXOLOTL]" : "";
+    const presenceTag = axolotl_present === true ? " [AXOLOTL]" : "";
     addLog(`pH ${ph.toFixed(2)}  temp ${temp_c.toFixed(1)}°C${presenceTag}`);
   }
 
@@ -253,8 +259,8 @@ const App = (() => {
     addLog(`Connecting to ${url}`, "info");
 
     client = mqtt.connect(url, {
-      clientId: CONFIG.broker.clientId,
-      clean:    true,
+      clientId:        CONFIG.broker.clientId,
+      clean:           true,
       reconnectPeriod: 3000,
     });
 
@@ -286,11 +292,8 @@ const App = (() => {
   }
 
   // ── Public API ─────────────────────────────────────────────
-  function clearLog() {
-    ui.log.innerHTML = "";
-  }
+  function clearLog() { ui.log.innerHTML = ""; }
 
-  // ── Init ───────────────────────────────────────────────────
   connect();
 
   return { clearLog };
