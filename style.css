@@ -326,3 +326,13 @@ html, body {
   transition: color 0.2s, border-color 0.2s;
 }
 .btn-clear:hover { color: var(--text); border-color: var(--border2); }
+
+/* ── Axolotl icon ─────────────────────────────────────────── */
+.axolotl-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-top: 12px;
+}
+.axolotl-icon.hidden { display: none; }
