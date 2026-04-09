@@ -330,10 +330,10 @@ html, body {
 /* ── Axolotl icon ─────────────────────────────────────────── */
 .axolotl-icon {
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  margin-top: 12px;
+  margin: 12px auto 0;
   background: transparent;
   mix-blend-mode: screen;
 }
