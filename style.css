@@ -335,6 +335,6 @@ html, body {
   object-fit: contain;
   margin: 12px auto 0;
   background: transparent;
-  mix-blend-mode: screen;
+  mix-blend-mode: multiply;
 }
 .axolotl-icon.hidden { display: none; }
