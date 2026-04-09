@@ -2,7 +2,7 @@ const CONFIG = {
   broker: {
     host:     "wss://teams-shortly-ministries-belief.trycloudflare.com",   // broker machine IP — change to wss:// for prod
     port:     443,                    // WebSocket port on Mosquitto
-    topic:    "arduino-sensors-data",  // must match exactly what Arduino publishes to
+    topic:    "arduino/sensors/data",  // must match exactly what Arduino publishes to
     clientId: "dashboard-" + Math.random().toString(16).slice(2),
   },
   chart: { maxPoints: 50 },
