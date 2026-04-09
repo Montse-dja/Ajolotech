@@ -88,7 +88,7 @@ const App = (() => {
         borderWidth: 1.5,
         pointRadius: 0,
         tension: 0.3,
-        fill: { target: "origin", above: "#C94BEB" },
+        fill: { target: "origin", above: "#763387" },
       }],
     },
     options: {
