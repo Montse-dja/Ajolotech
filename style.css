@@ -156,45 +156,69 @@ html, body {
   margin-bottom: 10px;
 }
 
-/* ── Row 1: four small sensor cards ──────────────────────── */
-.cards--sensors {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+/* ── Row 1: combined sensors card ────────────────────────── */
+.card--sensors {
+  width: 100%;
 }
 
-@media (max-width: 900px) {
-  .cards--sensors { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 540px) {
-  .cards--sensors { grid-template-columns: 1fr 1fr; }
+.sensors-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
 }
 
-/* Sensor card values */
-.card-value {
+.sensor-block {
+  flex: 1;
+  position: relative;
+  padding-right: 8px;
+}
+
+.sensor-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  margin: 0 20px;
+  flex-shrink: 0;
+}
+
+.sensor-sub-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+
+.sensor-value {
   font-family: var(--font-mono);
-  font-size: 44px;
+  font-size: 36px;
   font-weight: 400;
   line-height: 1;
   color: var(--text);
   transition: color 0.3s;
 }
 
-.card-value.ok    { color: var(--teal); }
-.card-value.alert { color: var(--red); }
+.sensor-value.ok    { color: var(--teal); }
+.sensor-value.alert { color: var(--red); }
 
-.card-unit {
+.sensor-unit {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
-.card-range {
+.sensor-range {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-dim);
-  margin-top: 8px;
+  margin-top: 6px;
+}
+
+@media (max-width: 700px) {
+  .sensors-row { flex-wrap: wrap; gap: 16px; }
+  .sensor-divider { display: none; }
+  .sensor-block { flex: 1 1 40%; }
 }
 
 .card-badge {
