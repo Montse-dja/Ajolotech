@@ -28,42 +28,51 @@
 
     <main class="dashboard">
 
-      <!-- ── Row 1: four small sensor cards ── -->
-      <section class="cards cards--sensors">
+      <!-- ── Row 1: combined sensors card ── -->
+      <div class="card card--sensors">
+        <div class="card-label">Sensores</div>
+        <div class="sensors-row">
 
-        <div class="card card--temp">
-          <div class="card-label">Temperatura</div>
-          <div class="card-value" id="val-temp">—</div>
-          <div class="card-unit">°C</div>
-          <div class="card-range" id="range-temp"></div>
-          <div class="card-badge" id="badge-temp"></div>
+          <div class="sensor-block">
+            <div class="sensor-sub-label">Temperatura</div>
+            <div class="sensor-value" id="val-temp">—</div>
+            <div class="sensor-unit">°C</div>
+            <div class="sensor-range" id="range-temp"></div>
+            <div class="card-badge" id="badge-temp"></div>
+          </div>
+
+          <div class="sensor-divider"></div>
+
+          <div class="sensor-block">
+            <div class="sensor-sub-label">pH</div>
+            <div class="sensor-value" id="val-ph">—</div>
+            <div class="sensor-unit">pH</div>
+            <div class="sensor-range" id="range-ph"></div>
+            <div class="card-badge" id="badge-ph"></div>
+          </div>
+
+          <div class="sensor-divider"></div>
+
+          <div class="sensor-block">
+            <div class="sensor-sub-label">Turbidez</div>
+            <div class="sensor-value" id="val-turbidity">—</div>
+            <div class="sensor-unit">NTU</div>
+            <div class="sensor-range" id="range-turbidity"></div>
+            <div class="card-badge" id="badge-turbidity"></div>
+          </div>
+
+          <div class="sensor-divider"></div>
+
+          <div class="sensor-block">
+            <div class="sensor-sub-label">Humedad módulo</div>
+            <div class="sensor-value" id="val-humidity">—</div>
+            <div class="sensor-unit">%</div>
+            <div class="sensor-range" id="range-humidity"></div>
+            <div class="card-badge" id="badge-humidity"></div>
+          </div>
+
         </div>
-
-        <div class="card card--ph">
-          <div class="card-label">pH</div>
-          <div class="card-value" id="val-ph">—</div>
-          <div class="card-unit">pH</div>
-          <div class="card-range" id="range-ph"></div>
-          <div class="card-badge" id="badge-ph"></div>
-        </div>
-
-        <div class="card card--turbidity">
-          <div class="card-label">Turbidez</div>
-          <div class="card-value" id="val-turbidity">—</div>
-          <div class="card-unit">NTU</div>
-          <div class="card-range" id="range-turbidity"></div>
-          <div class="card-badge" id="badge-turbidity"></div>
-        </div>
-
-        <div class="card card--humidity">
-          <div class="card-label">Humedad módulo</div>
-          <div class="card-value" id="val-humidity">—</div>
-          <div class="card-unit">%</div>
-          <div class="card-range" id="range-humidity"></div>
-          <div class="card-badge" id="badge-humidity"></div>
-        </div>
-
-      </section>
+      </div>
 
       <!-- ── Row 2: energy card + axolotl card + stats card ── -->
       <section class="cards cards--wide">
@@ -152,14 +161,12 @@
   </div>
 
   <!-- CDN libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script> 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.3.4/mqtt.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
   <!-- App scripts — order matters -->
   <script src="thresholds.js"></script>
   <script src="config.js"></script>
-  <!-- <script src="mock.js"></script> Remove this line when real sensors are connected -->
   <script src="app.js"></script>
 
 </body>
