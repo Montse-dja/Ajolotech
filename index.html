@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Axolotech — Lake Monitor</title>
+  <title>Axolotech — Monitor de Lago</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,11 +11,11 @@
   <header class="topbar">
     <div class="topbar-left">
       <span class="logo">Axolotech</span>
-      <span class="logo-sub">Lake Monitoring System</span>
+      <span class="logo-sub">Sistema de Monitoreo</span>
     </div>
     <div class="topbar-right">
       <span class="status-dot" id="status-dot"></span>
-      <span class="status-label" id="status-label">Connecting...</span>
+      <span class="status-label" id="status-label">Conectando...</span>
       <span class="last-seen" id="last-seen"></span>
     </div>
   </header>
@@ -28,86 +28,138 @@
 
     <main class="dashboard">
 
-      <section class="cards">
-        <div class="card card--ph" id="card-ph">
-          <div class="card-label">pH Level</div>
-          <div class="card-value" id="val-ph">—</div>
-          <div class="card-unit">pH</div>
-          <div class="card-range" id="range-ph"></div>
-          <div class="card-badge" id="badge-ph"></div>
-        </div>
-        <div class="card card--temp" id="card-temp">
-          <div class="card-label">Temperature</div>
+      <!-- ── Row 1: four small sensor cards ── -->
+      <section class="cards cards--sensors">
+
+        <div class="card card--temp">
+          <div class="card-label">Temperatura</div>
           <div class="card-value" id="val-temp">—</div>
           <div class="card-unit">°C</div>
           <div class="card-range" id="range-temp"></div>
           <div class="card-badge" id="badge-temp"></div>
         </div>
-        <div class="card card--axolotl" id="card-axolotl">
-          <div class="card-label">Axolotl Presence</div>
+
+        <div class="card card--ph">
+          <div class="card-label">pH</div>
+          <div class="card-value" id="val-ph">—</div>
+          <div class="card-unit">pH</div>
+          <div class="card-range" id="range-ph"></div>
+          <div class="card-badge" id="badge-ph"></div>
+        </div>
+
+        <div class="card card--turbidity">
+          <div class="card-label">Turbidez</div>
+          <div class="card-value" id="val-turbidity">—</div>
+          <div class="card-unit">NTU</div>
+          <div class="card-range" id="range-turbidity"></div>
+          <div class="card-badge" id="badge-turbidity"></div>
+        </div>
+
+        <div class="card card--humidity">
+          <div class="card-label">Humedad módulo</div>
+          <div class="card-value" id="val-humidity">—</div>
+          <div class="card-unit">%</div>
+          <div class="card-range" id="range-humidity"></div>
+          <div class="card-badge" id="badge-humidity"></div>
+        </div>
+
+      </section>
+
+      <!-- ── Row 2: energy card + axolotl card + stats card ── -->
+      <section class="cards cards--wide">
+
+        <!-- Energy card: voltage + current side by side, solar status below -->
+        <div class="card card--energy">
+          <div class="card-label">Energía</div>
+          <div class="energy-row">
+            <div class="energy-block">
+              <div class="energy-sub-label">Voltaje</div>
+              <div class="energy-value" id="val-voltage">—</div>
+              <div class="energy-unit">V</div>
+              <div class="energy-badge" id="badge-voltage"></div>
+            </div>
+            <div class="energy-divider"></div>
+            <div class="energy-block">
+              <div class="energy-sub-label">Corriente</div>
+              <div class="energy-value" id="val-current">—</div>
+              <div class="energy-unit">A</div>
+              <div class="energy-badge" id="badge-current"></div>
+            </div>
+          </div>
+          <div class="solar-row">
+            <span class="solar-dot" id="solar-dot"></span>
+            <span class="solar-status" id="solar-status">Panel solar: —</span>
+          </div>
+        </div>
+
+        <!-- Axolotl card: presence + AI confidence -->
+        <div class="card card--axolotl">
+          <div class="card-label">Presencia Ajolote</div>
           <div class="card-presence" id="val-presence">—</div>
           <div class="card-confidence" id="val-confidence"></div>
-          <img src="image/axolotl.png" alt="Axolotl detected" id="axolotl-icon" class="axolotl-icon hidden" />
+          <img src="image/axolotl.png" alt="Ajolote detectado" id="axolotl-icon" class="axolotl-icon hidden" />
         </div>
+
+        <!-- Stats card -->
         <div class="card card--stats">
-          <div class="card-label">Session</div>
+          <div class="card-label">Sesión</div>
           <div class="stat-row">
-            <span class="stat-name">Readings</span>
+            <span class="stat-name">Lecturas</span>
             <span class="stat-val" id="stat-count">0</span>
           </div>
           <div class="stat-row">
-            <span class="stat-name">Detections</span>
+            <span class="stat-name">Detecciones</span>
             <span class="stat-val" id="stat-detections">0</span>
           </div>
-          <div class="stat-row">
-            <span class="stat-name">pH alerts</span>
-            <span class="stat-val" id="stat-ph-alerts">0</span>
+        </div>
+
+      </section>
+
+      <!-- ── Single switchable chart ── -->
+      <section class="chart-section">
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title-label" id="chart-title-label">Temperatura — histórico</span>
+            <span class="chart-subtitle" id="chart-range-label"></span>
           </div>
-          <div class="stat-row">
-            <span class="stat-name">Temp alerts</span>
-            <span class="stat-val" id="stat-temp-alerts">0</span>
+
+          <!-- Variable selector buttons -->
+          <div class="chart-selector">
+            <button class="chart-btn active" data-key="temp_c">Temp</button>
+            <button class="chart-btn" data-key="ph">pH</button>
+            <button class="chart-btn" data-key="turbidity">Turbidez</button>
+            <button class="chart-btn" data-key="humidity">Humedad</button>
+            <button class="chart-btn" data-key="voltage">Voltaje</button>
+            <button class="chart-btn" data-key="current">Corriente</button>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="chart-main"></canvas>
           </div>
         </div>
       </section>
 
-      <section class="charts">
-        <div class="chart-card">
-          <div class="chart-header">
-            <span class="chart-title">pH over time</span>
-            <span class="chart-subtitle" id="chart-ph-range"></span>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chart-ph"></canvas>
-          </div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-header">
-            <span class="chart-title">Temperature over time</span>
-            <span class="chart-subtitle" id="chart-temp-range"></span>
-          </div>
-          <div class="chart-wrap">
-            <canvas id="chart-temp"></canvas>
-          </div>
-        </div>
-      </section>
-
+      <!-- ── Message log ── -->
       <section class="log-section">
         <div class="log-header">
-          <span class="chart-title">Message log</span>
-          <button class="btn-clear" onclick="App.clearLog()">Clear</button>
+          <span class="chart-title-label">Registro de mensajes</span>
+          <button class="btn-clear" onclick="App.clearLog()">Limpiar</button>
         </div>
         <div class="log" id="log"></div>
       </section>
 
     </main>
-
   </div>
 
+  <!-- CDN libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.3.4/mqtt.min.js"></script>
+
+  <!-- App scripts — order matters -->
+  <script src="thresholds.js"></script>
   <script src="config.js"></script>
-  <script src="mock.js"></script> <!--Simulation when no HW is connected, delete this is sensors are running-->
+  <script src="mock.js"></script> <!-- Remove this line when real sensors are connected -->
   <script src="app.js"></script>
 
 </body>
