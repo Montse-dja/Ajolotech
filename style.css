@@ -134,20 +134,7 @@ html, body {
   gap: 20px;
 }
 
-/* ── Metric cards ─────────────────────────────────────────── */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-@media (max-width: 900px) {
-  .cards { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 540px) {
-  .cards { grid-template-columns: 1fr; }
-}
-
+/* ── Card base ────────────────────────────────────────────── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -169,6 +156,21 @@ html, body {
   margin-bottom: 10px;
 }
 
+/* ── Row 1: four small sensor cards ──────────────────────── */
+.cards--sensors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .cards--sensors { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 540px) {
+  .cards--sensors { grid-template-columns: 1fr 1fr; }
+}
+
+/* Sensor card values */
 .card-value {
   font-family: var(--font-mono);
   font-size: 44px;
@@ -209,6 +211,119 @@ html, body {
 .card-badge.ok    { background: var(--green-dim); color: var(--green); }
 .card-badge.alert { background: var(--red-dim);   color: var(--red); }
 
+/* ── Row 2: wide section (energy + axolotl + stats) ──────── */
+.cards--wide {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 960px) {
+  .cards--wide { grid-template-columns: 1fr 1fr; }
+  .card--energy { grid-column: 1 / -1; }
+}
+@media (max-width: 540px) {
+  .cards--wide { grid-template-columns: 1fr; }
+}
+
+/* ── Energy card ──────────────────────────────────────────── */
+.card--energy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.energy-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.energy-block {
+  flex: 1;
+  position: relative;
+}
+
+.energy-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+  margin: 0 20px;
+  flex-shrink: 0;
+}
+
+.energy-sub-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+
+.energy-value {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+.energy-value.ok    { color: var(--teal); }
+.energy-value.alert { color: var(--red); }
+
+.energy-unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.energy-badge {
+  margin-top: 6px;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+.energy-badge.ok    { background: var(--green-dim); color: var(--green); }
+.energy-badge.alert { background: var(--red-dim);   color: var(--red); }
+
+/* Solar status row */
+.solar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}
+
+.solar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.solar-dot.on  { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.solar-dot.off { background: var(--text-dim); }
+
+.solar-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Axolotl card ─────────────────────────────────────────── */
+.card--axolotl {
+  display: flex;
+  flex-direction: column;
+}
+
 .card-presence {
   font-family: var(--font-mono);
   font-size: 28px;
@@ -222,9 +337,11 @@ html, body {
 .card-confidence {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-dim);
+  color: var(--text-muted);
+  margin-top: 4px;
 }
 
+/* ── Stats card ───────────────────────────────────────────── */
 .card--stats { display: flex; flex-direction: column; gap: 10px; }
 
 .stat-row {
@@ -241,16 +358,8 @@ html, body {
   color: var(--text);
 }
 
-/* ── Charts ───────────────────────────────────────────────── */
-.charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 700px) {
-  .charts { grid-template-columns: 1fr; }
-}
+/* ── Single chart section ─────────────────────────────────── */
+.chart-section { width: 100%; }
 
 .chart-card {
   background: var(--surface);
@@ -266,7 +375,7 @@ html, body {
   margin-bottom: 14px;
 }
 
-.chart-title {
+.chart-title-label {
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
@@ -280,7 +389,40 @@ html, body {
   color: var(--text-dim);
 }
 
-.chart-wrap { position: relative; height: 180px; }
+/* Chart variable selector */
+.chart-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.chart-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chart-btn:hover {
+  color: var(--text);
+  border-color: var(--border2);
+}
+
+.chart-btn.active {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: var(--teal-dim);
+}
+
+.chart-wrap { position: relative; height: 200px; }
 
 /* ── Log ──────────────────────────────────────────────────── */
 .log-section {
@@ -330,10 +472,9 @@ html, body {
 /* ── Axolotl icon ─────────────────────────────────────────── */
 .axolotl-icon {
   display: block;
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   margin: 12px auto 0;
-   blend-mode: normal;
 }
 .axolotl-icon.hidden { display: none; }
