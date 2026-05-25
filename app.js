@@ -28,8 +28,6 @@ const App = (() => {
     activeChart: "temp_c",   // which series the single chart is showing
   };
 
-  let client = null;
-
   // ── DOM refs ───────────────────────────────────────────────
   const $ = id => document.getElementById(id);
 
@@ -356,43 +354,26 @@ const App = (() => {
     addLog(`pH ${data.ph.toFixed(2)}  temp ${data.temp_c.toFixed(1)}°C${tag}`);
   }
 
-  // ── MQTT connection ────────────────────────────────────────
-  function connect() {
-    const url = `${CONFIG.broker.host}:${CONFIG.broker.port}`;
+  // ── HTTP polling ───────────────────────────────────────────
+  function startPolling() {
     setStatus("connecting", "Conectando...");
-    addLog(`Conectando a ${url}`, "info");
+    addLog(`Conectando a ${CONFIG.api.endpoint}`, "info");
 
-    client = mqtt.connect(url, {
-      clientId:        CONFIG.broker.clientId,
-      clean:           true,
-      reconnectPeriod: 3000,
-    });
+    async function poll() {
+      try {
+        const res = await fetch(CONFIG.api.endpoint);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const raw = await res.json();
+        setStatus("connected", "Conectado");
+        handleMessage(JSON.stringify(raw));
+      } catch (err) {
+        setStatus("disconnected", "Error");
+        addLog("Error al obtener datos: " + err.message, "error");
+      }
+    }
 
-    client.on("connect", () => {
-      setStatus("connected", "Conectado");
-      addLog(`Conectado — suscrito a ${CONFIG.broker.topic}`, "info");
-      client.subscribe(CONFIG.broker.topic, { qos: 1 }, (err) => {
-        if (err) addLog("Error al suscribir: " + err.message, "error");
-      });
-    });
-
-    client.on("message", (_topic, message) => {
-      handleMessage(message.toString());
-    });
-
-    client.on("reconnect", () => {
-      setStatus("connecting", "Reconectando...");
-      addLog("Reconectando...");
-    });
-
-    client.on("close", () => {
-      setStatus("disconnected", "Desconectado");
-      addLog("Conexión cerrada", "error");
-    });
-
-    client.on("error", (err) => {
-      addLog("Error MQTT: " + err.message, "error");
-    });
+    poll();
+    setInterval(poll, CONFIG.api.pollInterval);
   }
 
   // ── Chart button listeners ─────────────────────────────────
@@ -409,7 +390,7 @@ const App = (() => {
   // ── Public API ─────────────────────────────────────────────
   function clearLog() { ui.log.innerHTML = ""; }
 
-  connect();
+  startPolling();
 
   return { clearLog, switchChart };
 
