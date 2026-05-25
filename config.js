@@ -5,11 +5,9 @@
 // Never rename the RIGHT side — internal names match variable comments in thresholds.js.
 
 const CONFIG = {
-  broker: {
-    host:     "wss://teams-shortly-ministries-belief.trycloudflare.com",
-    port:     443,
-    topic:    "arduino/sensors/data",
-    clientId: "dashboard-" + Math.random().toString(16).slice(2),
+  api: {
+    endpoint: "https://rbk7ljo1b0.execute-api.us-east-1.amazonaws.com/prod/vars",
+    pollInterval: 5000,
   },
 
   chart: { maxPoints: 50 },
