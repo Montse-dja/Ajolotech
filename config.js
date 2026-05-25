@@ -18,15 +18,15 @@ const CONFIG = {
   // Left  = exact key the hardware sends in JSON
   // Right = internal name (do not change the right side)
   keyMap: {
-    "temperatura":        "temp_c",
-    "ph":                 "ph",
-    "oxigeno_disuelto":   "dissolved_o2",   // reserved — not yet displayed
-    "turbidez":           "turbidity",
-    "humedad":            "humidity",
-    "voltaje":            "voltage",
-    "corriente":          "current",
-    "panel_solar":        "solar_active",   // boolean or "activo"/"apagado"
-    "presencia_ajolote":  "axolotl_present",// boolean
-    "confianza_ia":       "confidence",     // 0–1 float  OR  0–100 int (both handled)
-  },
+    "var1":  "temp_c",
+    "var2":  "ph",
+    "var3":  "dissolved_o2",
+    "var4":  "turbidity",
+    "var5":  "humidity",
+    "var6":  "voltage",
+    "var7":  "current",
+    "var8":  "solar_active",
+    "var9":  "axolotl_present",
+    "var10": "confidence",
+  }
 };
