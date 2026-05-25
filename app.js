@@ -1,5 +1,5 @@
-// app.js — MQTT connection, data handling, UI updates
-// Depends on: thresholds.js, config.js (both loaded first), Chart.js, mqtt.js (CDN)
+// app.js — HTTP polling, data handling, UI updates
+// Depends on: thresholds.js, config.js (both loaded first), Chart.js + date-fns adapter (CDN)
 
 const App = (() => {
 
@@ -203,7 +203,7 @@ const App = (() => {
     const ok = isInRange(value, key);
     const t  = THRESHOLDS[key];
     valEl.textContent  = value.toFixed(decimals);
-    valEl.className    = "card-value " + (ok ? "ok" : "alert");
+    valEl.className    = "sensor-value " + (ok ? "ok" : "alert");
     badgeEl.textContent = ok ? "Normal" : "Alerta";
     badgeEl.className  = "card-badge " + (ok ? "ok" : "alert");
     if (rangeEl && t) {
