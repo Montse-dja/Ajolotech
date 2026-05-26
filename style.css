@@ -16,21 +16,27 @@
   --text-muted:#6b7068;
   --text-dim:  #3f433f;
 
-  --teal:      #FF63A1;
-  --teal-dim:  #7D2F4E;
-  --amber:     #C94BEB;
-  --amber-dim: #9C8746;
+  --teal:      #a78bfa;
+  --teal-dim:  #2e1f5e;
+  --amber:     #818cf8;
+  --amber-dim: #1e2157;
   --red:       #F5C738;
   --red-dim:   #5c1f16;
   --green:     #FF63A1;
   --green-dim: #542635;
 
-  --color-temp:      #e8a838;
-  --color-ph:        #3ecfb2;
-  --color-turbidity: #a87bff;
-  --color-humidity:  #5bb8ff;
-  --color-voltage:   #FF63A1;
-  --color-current:   #ff9a5c;
+  --color-temp:      #c084fc;
+  --color-temp-dim:  #3b1f5c;
+  --color-ph:        #38bdf8;
+  --color-ph-dim:    #0c3352;
+  --color-turbidity: #818cf8;
+  --color-turb-dim:  #1e2157;
+  --color-humidity:  #67e8f9;
+  --color-hum-dim:   #0c3a42;
+  --color-voltage:   #a78bfa;
+  --color-volt-dim:  #2e1f5e;
+  --color-current:   #6ee7b7;
+  --color-curr-dim:  #0d3328;
 
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
@@ -208,11 +214,16 @@ html, body {
 .sensor-value.ok    { color: var(--teal); }
 .sensor-value.alert { color: var(--red); }
 
-/* Per-sensor colors (ok state only — alert stays red for all) */
+/* Per-sensor colors */
 .color-temp      .sensor-value.ok { color: var(--color-temp); }
 .color-ph        .sensor-value.ok { color: var(--color-ph); }
 .color-turbidity .sensor-value.ok { color: var(--color-turbidity); }
 .color-humidity  .sensor-value.ok { color: var(--color-humidity); }
+
+.color-temp      .card-badge.ok { background: var(--color-temp-dim); color: var(--color-temp); }
+.color-ph        .card-badge.ok { background: var(--color-ph-dim);   color: var(--color-ph); }
+.color-turbidity .card-badge.ok { background: var(--color-turb-dim); color: var(--color-turbidity); }
+.color-humidity  .card-badge.ok { background: var(--color-hum-dim);  color: var(--color-humidity); }
 
 .sensor-unit {
   font-family: var(--font-mono);
@@ -306,7 +317,7 @@ html, body {
   transition: color 0.3s;
 }
 
-.energy-value.ok    { color: var(--teal); }
+.energy-value.ok    { color: var(--color-voltage); }
 .energy-value.alert { color: var(--red); }
 
 .energy-unit {
@@ -326,8 +337,13 @@ html, body {
   padding: 2px 7px;
   border-radius: 3px;
 }
-.energy-badge.ok    { background: var(--green-dim); color: var(--green); }
-.energy-badge.alert { background: var(--red-dim);   color: var(--red); }
+.energy-badge.ok    { background: var(--color-volt-dim); color: var(--color-voltage); }
+.energy-badge.alert { background: var(--red-dim);        color: var(--red); }
+
+.color-voltage .energy-value.ok { color: var(--color-voltage); }
+.color-voltage .energy-badge.ok { background: var(--color-volt-dim); color: var(--color-voltage); }
+.color-current .energy-value.ok { color: var(--color-current); }
+.color-current .energy-badge.ok { background: var(--color-curr-dim); color: var(--color-current); }
 
 /* Solar status row */
 .solar-row {
