@@ -67,7 +67,7 @@ html, body {
   z-index: 100;
 }
 
-.topbar-left { display: flex; align-items: baseline; gap: 10px; }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
 
 .logo {
   font-family: var(--font-mono);
