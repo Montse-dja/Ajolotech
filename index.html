@@ -18,8 +18,18 @@
       <span class="status-dot" id="status-dot"></span>
       <span class="status-label" id="status-label">Conectando...</span>
       <span class="last-seen" id="last-seen"></span>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+
+  <!-- Nav drawer -->
+  <nav class="nav-drawer" id="nav-drawer">
+    <a href="index.html" class="nav-link active">Inicio</a>
+    <a href="patterns.html" class="nav-link">Patrones</a>
+  </nav>
+  <div class="nav-overlay" id="nav-overlay"></div>
 
   <div class="page-body">
 
@@ -169,6 +179,18 @@
   <script src="thresholds.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script>
+    const _hbg = document.getElementById("hamburger");
+    const _drw = document.getElementById("nav-drawer");
+    const _ovl = document.getElementById("nav-overlay");
+    function _toggleNav(open) {
+      _drw.classList.toggle("open", open);
+      _ovl.classList.toggle("open", open);
+      _hbg.classList.toggle("open", open);
+    }
+    _hbg.addEventListener("click", () => _toggleNav(!_drw.classList.contains("open")));
+    _ovl.addEventListener("click", () => _toggleNav(false));
+  </script>
 
 </body>
 </html>
