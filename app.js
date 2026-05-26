@@ -76,12 +76,12 @@ const App = (() => {
 
   // ── Chart labels ───────────────────────────────────────────
   const CHART_META = {
-    temp_c:    { label: "Temperatura",  unit: "°C",   color: "#e8a838", min: 5,   max: 35  },
-    ph:        { label: "pH",           unit: "pH",   color: "#3ecfb2", min: 5,   max: 10  },
-    turbidity: { label: "Turbidez",     unit: "NTU",  color: "#a87bff", min: 0,   max: 100 },
-    humidity:  { label: "Humedad",      unit: "%",    color: "#5bb8ff", min: 0,   max: 100 },
-    voltage:   { label: "Voltaje",      unit: "V",    color: "#FF63A1", min: 0,   max: 20  },
-    current:   { label: "Corriente",    unit: "A",    color: "#ff9a5c", min: 0,   max: 10  },
+    temp_c:    { label: "Temperatura",  unit: "°C",   color: "#c084fc", min: 5,   max: 35  },
+    ph:        { label: "pH",           unit: "pH",   color: "#38bdf8", min: 5,   max: 10  },
+    turbidity: { label: "Turbidez",     unit: "NTU",  color: "#818cf8", min: 0,   max: 100 },
+    humidity:  { label: "Humedad",      unit: "%",    color: "#67e8f9", min: 0,   max: 100 },
+    voltage:   { label: "Voltaje",      unit: "V",    color: "#a78bfa", min: 0,   max: 20  },
+    current:   { label: "Corriente",    unit: "A",    color: "#6ee7b7", min: 0,   max: 10  },
   };
 
   // ── Chart setup ────────────────────────────────────────────
