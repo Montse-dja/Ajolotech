@@ -33,7 +33,7 @@
         <div class="card-label">Sensores</div>
         <div class="sensors-row">
 
-          <div class="sensor-block">
+          <div class="sensor-block color-temp">
             <div class="sensor-sub-label">Temperatura</div>
             <div class="sensor-value" id="val-temp">—</div>
             <div class="sensor-unit">°C</div>
@@ -43,7 +43,7 @@
 
           <div class="sensor-divider"></div>
 
-          <div class="sensor-block">
+          <div class="sensor-block color-ph">
             <div class="sensor-sub-label">pH</div>
             <div class="sensor-value" id="val-ph">—</div>
             <div class="sensor-unit">pH</div>
@@ -53,7 +53,7 @@
 
           <div class="sensor-divider"></div>
 
-          <div class="sensor-block">
+          <div class="sensor-block color-turbidity">
             <div class="sensor-sub-label">Turbidez</div>
             <div class="sensor-value" id="val-turbidity">—</div>
             <div class="sensor-unit">NTU</div>
@@ -63,7 +63,7 @@
 
           <div class="sensor-divider"></div>
 
-          <div class="sensor-block">
+          <div class="sensor-block color-humidity">
             <div class="sensor-sub-label">Humedad módulo</div>
             <div class="sensor-value" id="val-humidity">—</div>
             <div class="sensor-unit">%</div>
@@ -161,8 +161,8 @@
   </div>
 
   <!-- CDN libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
   <!-- App scripts — order matters -->
   <script src="thresholds.js"></script>
