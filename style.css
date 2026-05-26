@@ -77,6 +77,12 @@ html, body {
   letter-spacing: 0.04em;
 }
 
+.logo-img {
+  height: 32px;
+  width: auto;
+  filter: invert(1);
+}
+
 .logo-sub {
   font-size: 12px;
   color: var(--text-muted);
