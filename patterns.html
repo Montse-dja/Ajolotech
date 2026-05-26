@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Axolotech — Patrones</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <img src="image/logo.png" alt="Axolotech" class="logo-img" />
+      <span class="logo">Axolotech</span>
+      <span class="logo-sub">Análisis de Patrones</span>
+    </div>
+    <div class="topbar-right">
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Nav drawer -->
+  <nav class="nav-drawer" id="nav-drawer">
+    <a href="index.html" class="nav-link">Inicio</a>
+    <a href="patterns.html" class="nav-link active">Patrones</a>
+  </nav>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <div class="page-body">
+    <main class="dashboard">
+
+      <!-- ── Range selector ── -->
+      <section class="patterns-controls">
+        <span class="patterns-title">Rango de análisis</span>
+        <div class="range-btns">
+          <button class="range-btn active" data-range="day">Hoy</button>
+          <button class="range-btn" data-range="week">Semana</button>
+          <button class="range-btn" data-range="month">Mes</button>
+          <button class="range-btn" data-range="year">Año</button>
+        </div>
+        <span class="patterns-status" id="patterns-status">Sin datos históricos aún</span>
+      </section>
+
+      <!-- ── Two pattern cards ── -->
+      <section class="cards cards--patterns">
+
+        <!-- Lake health card -->
+        <div class="card card--lake">
+          <div class="card-label">Salud del lago</div>
+          <div class="pattern-subtitle">Condiciones promedio · tendencias · anomalías</div>
+
+          <div class="pattern-grid" id="lake-grid">
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Temperatura promedio</div>
+              <div class="pattern-stat-value" id="lake-temp-avg">—</div>
+              <div class="pattern-stat-unit">°C</div>
+              <div class="pattern-stat-range" id="lake-temp-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">pH promedio</div>
+              <div class="pattern-stat-value" id="lake-ph-avg">—</div>
+              <div class="pattern-stat-unit">pH</div>
+              <div class="pattern-stat-range" id="lake-ph-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Turbidez promedio</div>
+              <div class="pattern-stat-value" id="lake-turb-avg">—</div>
+              <div class="pattern-stat-unit">NTU</div>
+              <div class="pattern-stat-range" id="lake-turb-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Humedad promedio</div>
+              <div class="pattern-stat-value" id="lake-hum-avg">—</div>
+              <div class="pattern-stat-unit">%</div>
+              <div class="pattern-stat-range" id="lake-hum-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Voltaje promedio</div>
+              <div class="pattern-stat-value" id="lake-volt-avg">—</div>
+              <div class="pattern-stat-unit">V</div>
+              <div class="pattern-stat-range" id="lake-volt-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Lecturas totales</div>
+              <div class="pattern-stat-value" id="lake-total">—</div>
+              <div class="pattern-stat-unit">muestras</div>
+              <div class="pattern-stat-range" id="lake-total-range"></div>
+            </div>
+
+          </div>
+
+          <div class="pattern-chart-wrap">
+            <canvas id="chart-lake"></canvas>
+          </div>
+
+          <div class="pattern-note" id="lake-note">
+            Conecta DynamoDB con historiales para ver tendencias temporales.
+          </div>
+        </div>
+
+        <!-- Axolotl behaviour card -->
+        <div class="card card--axolotl-patterns">
+          <div class="card-label">Comportamiento del ajolote</div>
+          <div class="pattern-subtitle">Condiciones preferidas · frecuencia de aparición</div>
+
+          <div class="pattern-grid" id="axolotl-grid">
+
+            <div class="pattern-stat color-temp">
+              <div class="pattern-stat-label">Temp. preferida</div>
+              <div class="pattern-stat-value" id="axo-temp-avg">—</div>
+              <div class="pattern-stat-unit">°C</div>
+              <div class="pattern-stat-range" id="axo-temp-range"></div>
+            </div>
+
+            <div class="pattern-stat color-ph">
+              <div class="pattern-stat-label">pH preferido</div>
+              <div class="pattern-stat-value" id="axo-ph-avg">—</div>
+              <div class="pattern-stat-unit">pH</div>
+              <div class="pattern-stat-range" id="axo-ph-range"></div>
+            </div>
+
+            <div class="pattern-stat color-turbidity">
+              <div class="pattern-stat-label">Turbidez preferida</div>
+              <div class="pattern-stat-value" id="axo-turb-avg">—</div>
+              <div class="pattern-stat-unit">NTU</div>
+              <div class="pattern-stat-range" id="axo-turb-range"></div>
+            </div>
+
+            <div class="pattern-stat color-humidity">
+              <div class="pattern-stat-label">Humedad preferida</div>
+              <div class="pattern-stat-value" id="axo-hum-avg">—</div>
+              <div class="pattern-stat-unit">%</div>
+              <div class="pattern-stat-range" id="axo-hum-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Detecciones totales</div>
+              <div class="pattern-stat-value" id="axo-detections">—</div>
+              <div class="pattern-stat-unit">veces</div>
+              <div class="pattern-stat-range" id="axo-det-range"></div>
+            </div>
+
+            <div class="pattern-stat">
+              <div class="pattern-stat-label">Tasa de aparición</div>
+              <div class="pattern-stat-value" id="axo-rate">—</div>
+              <div class="pattern-stat-unit">%</div>
+              <div class="pattern-stat-range" id="axo-rate-range"></div>
+            </div>
+
+          </div>
+
+          <div class="pattern-chart-wrap">
+            <canvas id="chart-axolotl"></canvas>
+          </div>
+
+          <div class="pattern-note" id="axo-note">
+            Cuando se detecte un ajolote, se registran las condiciones del lago en ese momento.
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ── AWS notice ── -->
+      <section class="aws-notice">
+        <div class="aws-notice-icon">⚠</div>
+        <div class="aws-notice-text">
+          <strong>Datos históricos pendientes.</strong>
+          Esta página requiere que Lambda guarde un registro por lectura en DynamoDB con timestamp como sort key,
+          y un endpoint <code>/history</code> que devuelva rangos de tiempo.
+          Los valores mostrados serán calculados automáticamente una vez conectado.
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="thresholds.js"></script>
+  <script src="config.js"></script>
+  <script src="patterns.js"></script>
+
+</body>
+</html>
