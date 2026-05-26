@@ -25,6 +25,13 @@
   --green:     #FF63A1;
   --green-dim: #9E5572;
 
+  --color-temp:      #e8a838;
+  --color-ph:        #3ecfb2;
+  --color-turbidity: #a87bff;
+  --color-humidity:  #5bb8ff;
+  --color-voltage:   #FF63A1;
+  --color-current:   #ff9a5c;
+
   --font-body: 'IBM Plex Sans', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --radius:    6px;
@@ -200,6 +207,12 @@ html, body {
 
 .sensor-value.ok    { color: var(--teal); }
 .sensor-value.alert { color: var(--red); }
+
+/* Per-sensor colors (ok state only — alert stays red for all) */
+.color-temp      .sensor-value.ok { color: var(--color-temp); }
+.color-ph        .sensor-value.ok { color: var(--color-ph); }
+.color-turbidity .sensor-value.ok { color: var(--color-turbidity); }
+.color-humidity  .sensor-value.ok { color: var(--color-humidity); }
 
 .sensor-unit {
   font-family: var(--font-mono);
