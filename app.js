@@ -198,12 +198,6 @@ const App = (() => {
     return out;
   }
 
-  // Add this block right after:
-  const numericKeys = ["temp_c", "ph", "dissolved_o2", "turbidity", "humidity", "voltage", "current", "confidence"];
-  for (const key of numericKeys) {
-    if (data[key] !== undefined) data[key] = parseFloat(data[key]);
-  }
-
   // Update a small sensor card (temp, ph, turbidity, humidity)
   function updateSensorCard(valEl, badgeEl, rangeEl, value, key, unit, decimals) {
     const ok = isInRange(value, key);
@@ -261,6 +255,12 @@ const App = (() => {
     }
 
     const data = remapPayload(raw);
+
+    // Convert all numeric fields from strings to floats
+    const numericKeys = ["temp_c", "ph", "dissolved_o2", "turbidity", "humidity", "voltage", "current", "confidence"];
+    for (const key of numericKeys) {
+      if (data[key] !== undefined) data[key] = parseFloat(data[key]);
+    }
 
     // Required: temp_c and ph
     if (data.temp_c === undefined || data.ph === undefined) {
