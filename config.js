@@ -7,7 +7,7 @@
 const CONFIG = {
   api: {
     endpoint:        "https://rbk7ljo1b0.execute-api.us-east-1.amazonaws.com/prod/vars",
-    historyEndpoint: "", // set this once the /history Lambda endpoint is ready
+    historyEndpoint: "https://rbk7ljo1b0.execute-api.us-east-1.amazonaws.com/prod/history", // set this once the /history Lambda endpoint is ready
     pollInterval:    5000, //ms
   },
 
