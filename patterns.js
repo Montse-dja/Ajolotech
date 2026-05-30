@@ -198,6 +198,7 @@ const Patterns = (() => {
       btn.classList.add("active");
       activeRange = btn.dataset.range;
       fetchHistory(activeRange);
+      setInterval(() => fetchHistory(activeRange), 60000); // refresh every 60 seconds
     });
   });
 
