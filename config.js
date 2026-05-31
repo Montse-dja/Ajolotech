@@ -9,7 +9,7 @@ const CONFIG = {
     endpoint:        "https://rbk7ljo1b0.execute-api.us-east-1.amazonaws.com/prod/vars",
     historyEndpoint: "https://rbk7ljo1b0.execute-api.us-east-1.amazonaws.com/prod/history",
     solarEndpoint:   "", // set once PUT /solar endpoint is ready on API Gateway
-    pollInterval:    5000, //ms
+    pollInterval:    60000, //ms
   },
 
   chart: { maxPoints: 50 },
