@@ -62,10 +62,10 @@ const App = (() => {
     // Axolotl card
     valPresence:  $("val-presence"),
     valConf:      $("val-confidence"),
-    axolotlIcon:  $("axolotl-icon"),
-    // Stats card
-    statCount:    $("stat-count"),
-    statDet:      $("stat-detections"),
+    cameraFrame:  $("camera-frame"),
+    cameraPlaceholder: $("camera-placeholder"),
+    // Solar button
+    solarBtn:     $("solar-btn"),
     // Single chart
     chartTitle:   $("chart-title-label"),
     chartRange:   $("chart-range-label"),
@@ -324,7 +324,6 @@ const App = (() => {
 
     // ── Axolotl card ──────────────────────────────────────
     const axolotl_present = data.axolotl_present !== undefined ? data.axolotl_present : null;
-    // confidence may arrive as 0–1 float OR 0–100 int — normalise to 0–1
     let confidence = null;
     if (data.confidence !== undefined && data.confidence !== null) {
       confidence = data.confidence > 1 ? data.confidence / 100 : data.confidence;
@@ -337,19 +336,23 @@ const App = (() => {
       ui.valPresence.textContent = "PENDIENTE";
       ui.valPresence.className   = "card-presence not-detected";
       ui.valConf.textContent     = "Módulo CV no conectado";
-      ui.axolotlIcon.classList.add("hidden");
     } else {
       ui.valPresence.textContent = axolotl_present ? "DETECTADO" : "NO DETECTADO";
       ui.valPresence.className   = "card-presence " + (axolotl_present ? "detected" : "not-detected");
       ui.valConf.textContent     = confidence !== null
         ? `Confianza IA: ${(confidence * 100).toFixed(0)}%`
         : "";
-      ui.axolotlIcon.classList.toggle("hidden", !axolotl_present);
     }
 
-    // ── Stats ─────────────────────────────────────────────
-    ui.statCount.textContent = state.count;
-    ui.statDet.textContent   = state.detections;
+    // ── Camera frame ──────────────────────────────────────
+    if (data.camera_frame !== undefined && data.camera_frame !== null && data.camera_frame !== "") {
+      ui.cameraFrame.src = CONFIG.imagePrefix + data.camera_frame;
+      ui.cameraFrame.classList.remove("hidden");
+      ui.cameraPlaceholder.classList.add("hidden");
+    } else {
+      ui.cameraFrame.classList.add("hidden");
+      ui.cameraPlaceholder.classList.remove("hidden");
+    }
     ui.lastSeen.textContent  = "Última: " + fmtTime(ts);
 
     // ── Chart ─────────────────────────────────────────────
@@ -358,6 +361,37 @@ const App = (() => {
 
     const tag = axolotl_present === true ? " [AJOLOTE]" : "";
     addLog(`pH ${data.ph.toFixed(2)}  temp ${data.temp_c.toFixed(1)}°C${tag}`);
+  }
+
+  // ── Solar manual toggle ────────────────────────────────────
+  let solarManualState = false; // tracks current manual state
+
+  function updateSolarBtn(isOn) {
+    solarManualState = isOn;
+    ui.solarBtn.textContent = isOn ? "Apagar manual" : "Encender manual";
+    ui.solarBtn.className   = "solar-btn " + (isOn ? "on" : "off");
+  }
+
+  async function toggleSolar() {
+    const newState = !solarManualState;
+
+    if (!CONFIG.api.solarEndpoint) {
+      addLog("Endpoint solar no configurado aún", "error");
+      return;
+    }
+
+    try {
+      const res = await fetch(CONFIG.api.solarEndpoint, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ var12: String(newState) }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      updateSolarBtn(newState);
+      addLog(`Panel solar manual: ${newState ? "ENCENDIDO" : "APAGADO"}`, "info");
+    } catch (err) {
+      addLog("Error al cambiar panel solar: " + err.message, "error");
+    }
   }
 
   // ── HTTP polling ───────────────────────────────────────────
@@ -396,8 +430,11 @@ const App = (() => {
   // ── Public API ─────────────────────────────────────────────
   function clearLog() { ui.log.innerHTML = ""; }
 
+  // Init solar button
+  updateSolarBtn(false);
+
   startPolling();
 
-  return { clearLog, switchChart };
+  return { clearLog, switchChart, toggleSolar };
 
 })();
