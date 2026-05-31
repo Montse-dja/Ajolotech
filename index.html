@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <!-- ── Row 2: energy card + axolotl card + stats card ── -->
+      <!-- ── Row 2: energy card + axolotl card ── -->
       <section class="cards cards--wide">
 
         <!-- Energy card: voltage + current side by side, solar status below -->
@@ -109,27 +109,22 @@
           <div class="solar-row">
             <span class="solar-dot" id="solar-dot"></span>
             <span class="solar-status" id="solar-status">Panel solar: —</span>
+            <button class="solar-btn" id="solar-btn" onclick="App.toggleSolar()">—</button>
           </div>
         </div>
 
-        <!-- Axolotl card: presence + AI confidence -->
+        <!-- Axolotl card: presence + AI confidence + camera feed -->
         <div class="card card--axolotl">
           <div class="card-label">Presencia Ajolote</div>
-          <div class="card-presence" id="val-presence">—</div>
-          <div class="card-confidence" id="val-confidence"></div>
-          <img src="image/axolotl.png" alt="Ajolote detectado" id="axolotl-icon" class="axolotl-icon hidden" />
-        </div>
-
-        <!-- Stats card -->
-        <div class="card card--stats">
-          <div class="card-label">Sesión</div>
-          <div class="stat-row">
-            <span class="stat-name">Lecturas</span>
-            <span class="stat-val" id="stat-count">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-name">Detecciones</span>
-            <span class="stat-val" id="stat-detections">0</span>
+          <div class="axolotl-body">
+            <div class="axolotl-info">
+              <div class="card-presence" id="val-presence">—</div>
+              <div class="card-confidence" id="val-confidence"></div>
+            </div>
+            <div class="camera-frame-wrap">
+              <img id="camera-frame" class="camera-frame hidden" alt="Cámara submarina" />
+              <div class="camera-placeholder" id="camera-placeholder">Sin señal de cámara</div>
+            </div>
           </div>
         </div>
 
