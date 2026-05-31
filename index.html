@@ -8,18 +8,14 @@
 </head>
 
 <script>
-  // TEMP TEST — remove after confirming camera feed works
-  fetch("https://www.gstatic.com/webp/gallery/1.jpg")
-    .then(r => r.arrayBuffer())
-    .then(buf => {
-      const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
-      const img = document.getElementById("camera-frame");
-      const ph  = document.getElementById("camera-placeholder");
-      img.src = "data:image/jpeg;base64," + b64;
-      img.classList.remove("hidden");
-      ph.classList.add("hidden");
-    });
+// TEMP TEST — remove after confirming camera feed works
+const img = document.getElementById("camera-frame");
+const ph  = document.getElementById("camera-placeholder");
+img.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAyADIDASIAAhEBAxEB/8QAGwABAAMBAQEBAAAAAAAAAAAAAAQFBgMCAQf/xAAoEAABBAIBBAIDAQEAAAAAAAABAAIDBAUREiExBhNBUWEUIjL/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/YEREAREQBERAEREAREQBFHknjhbvI9rG+pcQFVyNYtzMdj4X1mH/VJIB+igDfiuERaAiIgCIiAIiIAiIgCIiAIiID//2Q==";
+img.classList.remove("hidden");
+ph.classList.add("hidden");
 </script>
+  
 <body>
 
   <header class="topbar">
