@@ -268,15 +268,11 @@ html, body {
 /* ── Row 2: wide section (energy + axolotl + stats) ──────── */
 .cards--wide {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: 12px;
 }
 
 @media (max-width: 960px) {
-  .cards--wide { grid-template-columns: 1fr 1fr; }
-  .card--energy { grid-column: 1 / -1; }
-}
-@media (max-width: 540px) {
   .cards--wide { grid-template-columns: 1fr; }
 }
 
@@ -351,13 +347,13 @@ html, body {
 .color-current .energy-value.ok { color: var(--color-current); }
 .color-current .energy-badge.ok { background: var(--color-curr-dim); color: var(--color-current); }
 
-/* Solar status row */
 .solar-row {
   display: flex;
   align-items: center;
   gap: 8px;
   padding-top: 4px;
   border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
 .solar-dot {
@@ -375,6 +371,70 @@ html, body {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-muted);
+  flex: 1;
+}
+
+.solar-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+.solar-btn:hover     { color: var(--text); border-color: var(--border2); }
+.solar-btn.on        { color: var(--red); border-color: var(--red); background: var(--red-dim); }
+.solar-btn.off       { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+
+/* ── Axolotl card layout ──────────────────────────────────── */
+.card--axolotl { display: flex; flex-direction: column; }
+
+.axolotl-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.axolotl-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 130px;
+}
+
+/* ── Camera frame ─────────────────────────────────────────── */
+.camera-frame-wrap {
+  flex: 1;
+  min-height: 120px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-frame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.camera-placeholder {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 16px;
 }
 
 /* ── Axolotl card ─────────────────────────────────────────── */
@@ -527,16 +587,6 @@ html, body {
   transition: color 0.2s, border-color 0.2s;
 }
 .btn-clear:hover { color: var(--text); border-color: var(--border2); }
-
-/* ── Axolotl icon ─────────────────────────────────────────── */
-.axolotl-icon {
-  display: block;
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-  margin: 12px auto 0;
-}
-.axolotl-icon.hidden { display: none; }
 
 /* ── Hamburger ────────────────────────────────────────────── */
 .hamburger {
