@@ -54,8 +54,6 @@ html, body {
 }
 
 /* ── Topbar ───────────────────────────────────────────────── */
-.hidden { display: none; }
-
 .topbar {
   display: flex;
   align-items: center;
@@ -419,6 +417,8 @@ html, body {
   gap: 6px;
   min-width: 130px;
 }
+
+.hidden { display: none !important; }
 
 /* ── Camera frame ─────────────────────────────────────────── */
 .camera-frame-wrap {
