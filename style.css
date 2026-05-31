@@ -54,6 +54,8 @@ html, body {
 }
 
 /* ── Topbar ───────────────────────────────────────────────── */
+.hidden { display: none; }
+
 .topbar {
   display: flex;
   align-items: center;
