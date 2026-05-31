@@ -368,7 +368,7 @@ const App = (() => {
 
   function updateSolarBtn(isOn) {
     solarManualState = isOn;
-    ui.solarBtn.textContent = isOn ? "Apagar manual" : "Encender manual";
+    ui.solarBtn.textContent = isOn ? "Apagar" : "Encender";
     ui.solarBtn.className   = "solar-btn " + (isOn ? "on" : "off");
   }
 
