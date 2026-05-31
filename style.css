@@ -392,6 +392,15 @@ html, body {
 .solar-btn.on        { color: var(--red); border-color: var(--red); background: var(--red-dim); }
 .solar-btn.off       { color: var(--green); border-color: var(--green); background: var(--green-dim); }
 
+.solar-manual-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: auto;
+}
+
 /* ── Axolotl card layout ──────────────────────────────────── */
 .card--axolotl { display: flex; flex-direction: column; }
 
