@@ -323,7 +323,8 @@ const App = (() => {
     }
 
     // ── Axolotl card ──────────────────────────────────────
-    const axolotl_present = data.axolotl_present !== undefined ? data.axolotl_present : null;
+    const axolotl_present = data.axolotl_present !== undefined
+    ? (data.axolotl_present === true || String(data.axolotl_present).toLowerCase() === "true"): null;
     let confidence = null;
     if (data.confidence !== undefined && data.confidence !== null) {
       confidence = data.confidence > 1 ? data.confidence / 100 : data.confidence;
