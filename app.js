@@ -62,8 +62,6 @@ const App = (() => {
     // Axolotl card
     valPresence:  $("val-presence"),
     valConf:      $("val-confidence"),
-    cameraFrame:  $("camera-frame"),
-    cameraPlaceholder: $("camera-placeholder"),
     // Solar button
     solarBtn:     $("solar-btn"),
     // Single chart
@@ -345,15 +343,6 @@ const App = (() => {
         : "";
     }
 
-    // ── Camera frame ──────────────────────────────────────
-    if (data.camera_frame !== undefined && data.camera_frame !== null && data.camera_frame !== "") {
-      ui.cameraFrame.src = CONFIG.imagePrefix + data.camera_frame;
-      ui.cameraFrame.classList.remove("hidden");
-      ui.cameraPlaceholder.classList.add("hidden");
-    } else {
-      ui.cameraFrame.classList.add("hidden");
-      ui.cameraPlaceholder.classList.remove("hidden");
-    }
     ui.lastSeen.textContent  = "Última: " + fmtTime(ts);
 
     // ── Chart ─────────────────────────────────────────────
