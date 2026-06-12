@@ -12,11 +12,11 @@
 // var7  = current         Corriente (A)
 
 const THRESHOLDS = {
-  temp_c:       { min: 14,   max: 20   },   // °C — axolotl comfort range
+  temp_c:       { min: 14,   max: 19   },   // °C — axolotl comfort range
   ph:           { min: 6.5,  max: 8.0  },   // pH
   dissolved_o2: { min: 5.0,  max: null },   // mg/L — reserved
-  turbidity:    { min: null, max: 10   },   // NTU — clear water
-  humidity:     { min: 30,   max: 80   },   // % — module enclosure
-  voltage:      { min: 11.0, max: 15.0 },   // V  — solar panel / battery
-  current:      { min: null, max: 5.0  },   // A  — overcurrent guard
+  turbidity:    { min: 800, max: 1024   },   // NTU — clear water
+  humidity:     { min: 0,   max: 70   },   // % — module enclosure
+  voltage:      { min: 11.2, max: 12.8 },   // V  — solar panel / battery
+  current:      { min: null, max: 3.0  },   // A  — overcurrent guard
 };
