@@ -322,15 +322,17 @@ const App = (() => {
 
     // ── Axolotl card ──────────────────────────────────────
     const axolotl_present = data.axolotl_present !== undefined
-    ? (data.axolotl_present === true || String(data.axolotl_present).toLowerCase() === "true"): null;
+    ? String(data.axolotl_present).toLowerCase() === "si"
+    : null;
+
     let confidence = null;
     if (data.confidence !== undefined && data.confidence !== null) {
       confidence = data.confidence > 1 ? data.confidence / 100 : data.confidence;
     }
-
+    
     state.count++;
     if (axolotl_present === true) state.detections++;
-
+    
     if (axolotl_present === null) {
       ui.valPresence.textContent = "PENDIENTE";
       ui.valPresence.className   = "card-presence not-detected";
